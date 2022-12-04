@@ -1,0 +1,136 @@
+<html>
+
+<head>
+
+   <title>IPM</title>
+
+   <meta  http-equiv="Content-Type" content="text/html; charset=iso8859-1" />
+
+	<style>
+		html {
+			scroll-behavior: smooth;
+		}
+		body { 
+		margin: 5%;
+		margin-left: 5%; 
+		margin-right: 5%; 
+		font-family: sans-serif;
+		font-size: small;
+		}
+
+		pre { 
+		font-family: monospace; 
+		}
+
+		table.code {
+		color: black;
+		background-color: #ccccff;
+		font-size: 100%;
+		width: 100%;
+		border: solid;
+		border-width: thin;
+		}
+
+		table.output {
+		color: black;
+		background-color: #ffccff;
+		font-size: 100%;
+		width: 100%;
+		border: solid;
+		border-width: thin;
+		}
+
+		th, td {
+			padding: 15px;
+			text-align: left;
+		}
+			
+			
+		li {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+	</style>
+
+</head>
+
+
+
+<body>
+
+
+
+<h2>Descri&ccedil;&atilde;o dos m&eacute;todos dispon&iacute;veis na API de acesso &agrave;  base de dados</h2>
+
+<p>A estrutura da base de dados pode ser consultada  <a href="db.SQL">aqui</a></p>
+
+<p> Todos os dados recebidos da API ou enviados &agrave; API est&atilde;o no formato JSON. Pode testar os m&eacute;todos dispon&iacute;veis com o comando "curl", por exemplo 
+
+<br />
+<br /><tt>curl -X GET  'http://localhost/LAB8_10/api/users.php?email=jbastos@ualg.pt' </tt>
+
+<br /><tt>curl -X POST  'http://localhost/LAB8_10/api/users.php' -d '{"name":"Mary Stevens","email":"stevens@gmail.com", "password":"sWd356"}'</tt>
+
+<br /> 
+<br />ou utilizando o site <a href="https://postman.com">https://postman.com</a></p>
+
+<h3> Tabela users </h3>
+<ul>
+	<li><b>Verifica se um utilizador já se encontra registado na base de dados:
+	</b><br /> <b>GET</b> http://localhost/LAB8_10/api/users.php?email=jbastos@ualg.pt <br />
+		retorna: JSON string {"id":"1","name":"Jose Bastos","email":"jbastos@ualg.pt"} ou null
+	</li>
+	<li><b>Registo de um utilizador:
+	</b><br /> <b>POST</b> http://localhost/LAB8_10/api/users.php <br />
+		Body:  JSON string {"name" :"Jose Bastos","email": "jbastos@ualg.pt","password": "segredo"}	<br />
+		retorna: JSON string {"id":"1","name":"Jose Bastos","email":"jbastos@ualg.pt"} ou null		
+	</li>	
+	<li><b>Login de um utilizador:
+	</b><br /> <b>GET</b> http://localhost/LAB8_10/api/users.php?email=jbastos@ualg.pt&password="segredo" <br />
+		retorna: JSON string {"id":"1","name":"Jose Bastos","email":"jbastos@ualg.pt","session_id":"9pgcsrpgjrj3lm7sr6glju679v"} ou null
+	</li>
+	<li><b>Logout de um utilizador:
+	</b><br /> <b>GET</b> http://localhost/LAB8_10/api/users.php?session_id=9pgcsrpgjrj3lm7sr6glju679v <br />
+		retorna: JSON string {"message":"Session destroyed"} ou null
+	</li>
+</ul>
+	<br />
+<h3> Tabela microposts </h3>	
+<ul>	
+
+	<li><b>Todos os posts:</b>
+	<br /> <b>GET</b> http://localhost/LAB8_10/api/microposts.php<br />
+		retorna: JSON string [{"name":"abc","id":"79","content":"lixo","user_id":"102", ...},  ...]	ou null 
+	</li>
+	<li><b>Registo de um novo post:</b> 
+	<br /> <b>POST</b> http://localhost/LAB8_10/api/microposts.php?session_id=9pgcsrpgjrj3lm7sr6glju679v<br />
+		Body: JSON string {"content": "lixo"}<br />
+		retorna: JSON string {"id":"53","user_id":"45", "content":"lixo","created_at":"2022-10-15 16:01:46", ...}	ou null
+	</li>
+	<li><b>Actualização de um post:</b> 
+	<br /> <b>PUT</b> http://localhost/LAB8_10/api/microposts.php?session_id=9pgcsrpgjrj3lm7sr6glju679v&micropost_id=53<br />
+		Body: JSON string {"content": "mais lixo"} <br />
+		retorna: JSON string {"id":"53","user_id":"45", "content":"mais lixo","updated_at":"2022-10-15 16:01:46", ...}	ou null
+	</li>
+</ul>
+
+<br />
+
+<h3> Tabela comments </h3>	
+<ul>	
+
+	<li><b>Todos os comments:</b>
+	<br /> <b>GET</b> http://localhost/LAB8_10/api/comments.php<br />
+		retorna: JSON string [{"id":"1","name":"jose bastos","email":"jbastos@ualg.pt"},  ...]	ou null 
+	</li>
+	<li><b>Registo de um novo comentario:</b> 
+	<br /> <b>POST</b> http://localhost/LAB8_10/api/comments.php?session_id=9pgcsrpgjrj3lm7sr6glju679v&micropost_id=53<br />
+		Body: JSON string {"content": "mais um comentario"}<br />
+		retorna: JSON string {"id":"53","user_id":"45", "content":"mais um comentario","updated_at":"2022-10-15 16:01:46", ...}	ou null
+	</li>
+
+</ul>
+
+</body>
+
+</html>
