@@ -1,4 +1,4 @@
-# Machine Person Interface LAB
+# Person Machine Interface LAB
 Project developed in Vue.js within the Person-Machine Interface class in Universidade do Algarve
 
 ## Project setup
